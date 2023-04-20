@@ -28,6 +28,9 @@ const options = {
       }
     }),
   ],
+  theme: {
+    colorScheme: "light",
+  },
   adapter: PrismaAdapter(prisma),
   secret: process.env.SECRET,
 };
