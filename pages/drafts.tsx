@@ -7,13 +7,16 @@ import Layout from '../components/Layout';
 import Post, { PostProps } from '../components/Post';
 import prisma from '../lib/prisma';
 
+// 下書きの一覧を取得
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  // クライアントのセッション取得
   const session = await getSession({ req });
+  // セッションが存在しない場合、403ステータスコードと空の下書きリストを返す
   if (!session) {
     res.statusCode = 403;
     return { props: { drafts: [] } };
   }
-
+  // セッションが存在する場合、下書き記事リスト取得
   const drafts = await prisma.post.findMany({
     where: {
       author: { email: session.user.email },
@@ -25,6 +28,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
       },
     },
   });
+
+  // 下書き記事のリストをpropsとして返す
   return {
     props: { drafts },
   };

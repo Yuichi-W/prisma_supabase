@@ -5,18 +5,23 @@ import Layout from '../components/Layout';
 import Router from 'next/router';
 
 const Draft: React.FC = () => {
+  // タイトルとコンテンツの状態管理
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
+  // フォームデータ送信関数を定義
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     try {
+      // 送信データを作成
       const body = { title, content };
+      // APIエンドポイントにPOSTリクエストを送信
       await fetch('/api/post', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
+      // データ送信後、下書き一覧ページにリダイレクト
       await Router.push('/drafts');
     } catch (error) {
       console.error(error);
