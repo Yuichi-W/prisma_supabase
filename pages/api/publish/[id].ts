@@ -1,3 +1,5 @@
+import prisma from '../../../lib/prisma';
+
 export default async function handle(req, res) {
   // 公開する記事のIDを取得
   const postId = req.query.id;
